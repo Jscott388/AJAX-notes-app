@@ -14,25 +14,12 @@
         $(document).ready(function() {
             $.ajax({
                 method: 'get',
-                url: '/notes',
+                url: '/notes/html',
                 dataType: 'html',
                 success: function(notes){
                     $('#notes').html(notes);
                 }
             });
-
-            $('#title').submit(function(e) {
-                e.preventDefault();
-                $.ajax({
-                    method: 'post',
-                    url: '/notes/create',
-                    data: $(this).serialize(),
-                    success: function(notes){
-                        $('#notes').html(notes);
-                    }
-                });
-            });
-
             $('#delete').submit(function(e){
                 e.preventDefault();
                 $.ajax({

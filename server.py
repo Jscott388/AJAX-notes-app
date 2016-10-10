@@ -6,10 +6,17 @@ app = Flask(__name__)
 
 mysql = MySQLConnector(app, 'notes')
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
+    query = "SELECT * FROM notes"
+    notes = mysql.query_db("SELECT * FROM notes")
+    return render_template('index.html', notes = notes)
 
-    return render_template('index.html')
+@app.route('/notes/html', methods=['GET'])
+def html_notes():
+    query = "SELECT * FROM notes"
+    notes = mysql.query_db("SELECT * FROM notes")
+    return render_template('notes.html', notes = notes)
 
 @app.route('/notes/create', methods=['POST'])
 def create():
@@ -18,7 +25,7 @@ def create():
         'title': request.form['title']
     }
     mysql.query_db(query, data)
-    return redirect('/notes')
+    return redirect('/')
 
 @app.route('/notes/<id>/delete')
 def delete(id):
@@ -27,7 +34,7 @@ def delete(id):
         'id': id
     }
     mysql.query_db(query, data)
-    return redirect('/notes')
+    return redirect('/')
 
 @app.route('/notes/<id>/update', methods=['POST'])
 def update(id):
@@ -37,13 +44,13 @@ def update(id):
         'desc': request.form['description']
     }
     mysql.query_db(query, data)
-    return redirect('/notes')
+    return redirect('/')
 
-@app.route('/notes')
-def notes():
-    show_notes = mysql.query_db("SELECT * FROM notes")
+@app.route('/notes/index_json')
+def index_json():
+    notes = mysql.query_db("SELECT * FROM notes")
 
-    return render_template('notes.html', notes = show_notes)
+    return jsonify(notes = notes)
 
 
 app.run(debug=True)
