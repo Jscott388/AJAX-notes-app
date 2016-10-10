@@ -1,0 +1,12 @@
+body{
+    margin-top: 50px;
+
+}
+.button.button-delete,
+button.button-delete,
+input[type="submit"].button-delete,
+input[type="reset"].button-delete,
+input[type="button"].button-delete {
+  color: #FFF;
+  background-color: red;
+  border-color: #33C3F0; }

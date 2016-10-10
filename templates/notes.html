@@ -1,0 +1,35 @@
+{% for note in notes %}
+<div class="row">
+    <div class="one-half column" >
+        <h4 class="hero-heading">{{note.title}}</h4>
+        <form action="/notes/{{note.id}}/delete" id="delete">
+            <input type="submit" class="button-delete" value="Delete">
+        </form>
+    </div>
+    <div class="one-half column" >
+            {% if note.description %}
+                <table class="u-full-width">
+                    <thead>
+                        <tr>
+                            <th>
+                                {{note.title}} - {{note.id}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{note.description}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            {% endif %}
+            <form action="/notes/{{note.id}}/update" method="POST" id="update">
+                <textarea name="description" class="u-full-width" data-id="{{note.id}}"></textarea>
+                <input type="submit" class="button-primary" value="Update">
+            </form>
+    </div>
+</div>
+<hr>
+{% endfor %}
